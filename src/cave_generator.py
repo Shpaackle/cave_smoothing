@@ -9,7 +9,7 @@ import PIL.ImageColor
 FILLED = 1
 EMPTY = 0
 BLACK = PIL.ImageColor.getcolor("black", "RGBA")
-INITIAL_CHANCE = 0.4
+INITIAL_CHANCE = 0.45
 IMAGE_FILE_NAME = "test_maps/test_map"
 
 Point = namedtuple("Point", ["x", "y"])
@@ -112,3 +112,17 @@ class CaveGenerator:
 
     def create_new_map(self):
         self.initialize_map()
+
+    def random_smoothing(self, attempts: int, min_neighbors: int = 5):
+        for _ in range(attempts):
+            point = Point(
+                x=random.randrange(1, self.width - 1),
+                y=random.randrange(1, self.height - 1),
+            )
+            if (
+                self.find_two_step_neighbors(point) > min_neighbors
+                or self.find_two_step_neighbors(point) > min_neighbors
+            ):
+                self.cave_map[point.x, point.y] = FILLED
+            else:
+                self.cave_map[point.x, point.y] = EMPTY

@@ -33,7 +33,7 @@ MapGenerator:
     second_step_min_input: second_step_min
     second_step_max_input: second_step_max
     second_step_attempts_input: second_step_attempts
-    random_smoothing_input: random_smoothing
+    random_smoothing_input: random_smoothing_attempts
 
     BoxLayout:
         orientation: "vertical"
@@ -156,10 +156,20 @@ MapGenerator:
             text: "draw new map"
             on_press: root.update_settings()
             on_release: root.create_new_map()
-        Button:
-            id: random_smoothing
-            text: "random smoothing"
-            on_release: root.random_smoothing()
+        BoxLayout:
+            Button:
+                id: random_smoothing_button
+                size_hint_x: 2
+                text: "random smoothing"
+                on_release: root.random_smoothing()
+            InputBox:
+                Label:
+                    text: "ATTEMPTS"
+                    size_hint_x: .2
+                CustomText:
+                    id: random_smoothing_attempts
+                    width: 50
+                    text: "50000"
 
     BoxLayout:
         size_hint_x: 2
