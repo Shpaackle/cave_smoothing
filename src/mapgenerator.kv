@@ -1,0 +1,167 @@
+<InputBox@BoxLayout>:
+    orientation: "horizontal"
+    padding: 5
+    spacing: 5
+
+<SettingsSlider@Slider>:
+    size_hint: 1.1, 1
+    step: 1
+
+<SettingsBar@BoxLayout>:
+    orientation: "vertical"
+
+<MapImage@Image>
+    id: map_image
+    source: "test_maps/test_map.png"
+    allow_stretch: True
+
+<CustomText@TextInput>
+    size_hint_x: None
+    width: 40
+    multiline: False
+
+MapGenerator:
+<MapGenerator>
+    id: map_generator
+    orientation: "horizontal"
+    map_image: map_image
+    map_width_input: map_width
+    map_height_input: map_height
+    first_step_min_input: first_step_min
+    first_step_max_input: first_step_max
+    first_step_attempts_input: first_step_attempts
+    second_step_min_input: second_step_min
+    second_step_max_input: second_step_max
+    second_step_attempts_input: second_step_attempts
+    random_smoothing_input: random_smoothing
+
+    BoxLayout:
+        orientation: "vertical"
+        size_hint_x: 3
+        SettingsBar:
+            id: settings_bar
+            size_hint_y: 10
+
+            BoxLayout:
+                size_hint_y: None
+                height: "40dp"
+                orientation: "horizontal"
+
+                Label:
+                    size_hint_x: .5
+                    text: "Map"
+                InputBox:
+
+                    Label:
+                        text: "WIDTH"
+                        halign: "right"
+                    CustomText:
+                        id: map_width
+                        text: "128"
+                InputBox:
+                    Label:
+                        text: "HEIGHT"
+                    CustomText:
+                        id: map_height
+                        text: "96"
+
+
+            BoxLayout:
+                size_hint_y: None
+                height: "40dp"
+                padding: 2
+                spacing: 1
+
+                Label:
+                    size_hint_x: 1
+                    text: "First smooth:"
+                InputBox:
+                    Label:
+                        text: "MIN"
+                        size_hint_x: .2
+                    CustomText:
+                        id: first_step_min
+                        width: 25
+                        text: "5"
+                InputBox:
+                    Label:
+                        text: "MAX"
+                        size_hint_x: .2
+                    CustomText:
+                        id: first_step_max
+                        width: 25
+                        text: "2"
+                InputBox:
+                    Label:
+                        text: "REPEATS"
+                    CustomText:
+                        id: first_step_attempts
+                        width: 25
+                        text: "4"
+
+            BoxLayout:
+                size_hint_y: None
+                height: "40dp"
+                padding: 2
+                spacing: 1
+
+                Label:
+                    size_hint_x: 1
+                    text: "Second smooth"
+                InputBox:
+                    Label:
+                        text: "MIN"
+                        size_hint_x: .2
+                    CustomText:
+                        id: second_step_min
+                        size_hint_x: None
+                        width: 25
+                        text: "5"
+                InputBox:
+                    Label:
+                        text: "MAX"
+                        size_hint_x: .2
+                    CustomText:
+                        id: second_step_max
+                        width: 25
+                        text: "-1"
+                InputBox:
+                    Label:
+                        text: "REPEATS"
+                    CustomText:
+                        id: second_step_attempts
+                        width: 25
+                        text: "2"
+
+#            Button:
+#                text: "Apply settings"
+#                on_press: root.update_settings()
+
+
+
+        Button:
+            id: initialize_map
+            text: "initialize map"
+            on_release: root.initialize_map(); root.map_to_image()
+        Button:
+            id: first_smooth_step
+            text: "first smooth step"
+            on_release: root.first_smooth_step()
+        Button:
+            id: second_smooth_step
+            text: "second smooth step"
+            on_release: root.second_smooth_step()
+        Button:
+            id: draw_new_map
+            text: "draw new map"
+            on_press: root.update_settings()
+            on_release: root.create_new_map()
+        Button:
+            id: random_smoothing
+            text: "random smoothing"
+            on_release: root.random_smoothing()
+
+    BoxLayout:
+        size_hint_x: 2
+        MapImage:
+            id: map_image
